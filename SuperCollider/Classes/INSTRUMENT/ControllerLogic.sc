@@ -4,6 +4,7 @@ ControllerLogic {
 	var state;
 	var inputs;
 	var outputs;
+	var >listener;
 
 	*new {
 		^super.new.init();
@@ -40,6 +41,14 @@ ControllerLogic {
 
 	removeOutput {|output|
 		outputs.removeAt( outputs.indexOf(output) );
+	}
+
+
+	notify{
+		var event;
+		event = ();
+		event.name = "Test Event";
+		listener.notify( event );
 	}
 
 

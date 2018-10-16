@@ -58,7 +58,19 @@
 			\note
 		);
 
-		modeMatrix.midiTarget = i.midi.launchpad;
+
+		/*
+		Map gui updater to matrix
+		i.map(
+			i.views.mode_matrix,
+			modeMatrix,
+			\note
+		);
+		*/
+
+		// modeMatrix.midiTarget = i.midi.launchpad;
+
+
 
 	}}).play;
 

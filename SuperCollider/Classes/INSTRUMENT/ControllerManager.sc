@@ -13,6 +13,10 @@ ControllerManager {
 
 	var instrument;
 
+	var eventListeners;
+
+	var <>listener;
+
 	*new {|instrument_|
 		^super.new.init(instrument_);
 	}
@@ -26,6 +30,9 @@ ControllerManager {
 		instruments = List.new;
 		targets = List.new;
 
+		eventListeners = IdentityDictionary.new;
+
+
 		controlTargetMap = IdentityDictionary.new;
 
 
@@ -33,6 +40,18 @@ ControllerManager {
 
 	}
 
+
+	listen{|source_|
+
+		eventListeners[source_.key] = EventListener( this, source_ );
+
+	}
+
+	notify{|sourceKey_,event_|
+
+		["ControllerManager.notify", sourceKey_,event_ ].postln;
+
+	}
 
 	set {|source, param1, param2 |
 
@@ -49,18 +68,19 @@ ControllerManager {
 
 		mappedParam1 = param1;
 
-if( source.midiTarget.notNil,{
+		if( source.midiTarget.notNil,{
 
-		if( source.midiTarget.isKindOf(MIDIDevice), {
-			inputMap = source.midiTarget.inputMap;
+			if( source.midiTarget.isKindOf(MIDIDevice), {
+				inputMap = source.midiTarget.inputMap;
+			});
+
+	        if( inputMap.isKindOf(IdentityDictionary), {
+	            if( inputMap[param1].notNil, {
+	                mappedParam1 = source.midiTarget.inputMap[param1].inputNum;
+	            });
+	        });
+
 		});
-
-        if( inputMap.isKindOf(IdentityDictionary), {
-            if( inputMap[param1].notNil, {
-                mappedParam1 = source.midiTarget.inputMap[param1].inputNum;
-            });
-        });
-});
 
 		if(controller.notNil, {
 
@@ -117,6 +137,12 @@ if( source.midiTarget.notNil,{
 
 		});
 
+
+
+		if( eventListeners[source.key.asSymbol].notNil, {
+
+		});
+
 	}
 
 	map {|controller,target,parameter,range|
@@ -141,6 +167,9 @@ if( source.midiTarget.notNil,{
 			key: controller.key,
 			protocol: controller.protocol,
 		);
+
+
+		this.listen( controller );
 
 		^controlTargetMap[ controller.key ];
 

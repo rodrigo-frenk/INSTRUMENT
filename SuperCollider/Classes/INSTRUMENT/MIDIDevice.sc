@@ -9,12 +9,12 @@ MIDIDevice {
     var spec;
     var <>name;
     var <id;
-    var <slug;
+    var <key;
     var >midi;
     var <protocol;
 
-    *new {|midiManager,device, spec_|
-        ^super.new.init(midiManager,device, spec_);
+    *new {|midiManager,key,device, spec_|
+        ^super.new.init(midiManager,key,device, spec_);
     }
 
     init {|midiManager,device_, spec_|
@@ -27,7 +27,7 @@ MIDIDevice {
 
         spec=spec_;
 
-        slug = name.replace(" ","_").toLower.asSymbol;
+        key = name.replace(" ","_").toLower.asSymbol;
         groups = ();
 
 		controllers = ();

@@ -32,7 +32,7 @@ ControllerGroup {
 		var newController;
 		var key = '';
 
-		key = device.slug;
+		key = device.key;
 
 		if( parent.notNil, {
 			if( parent.parent.notNil, {
