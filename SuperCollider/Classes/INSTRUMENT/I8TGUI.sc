@@ -11,6 +11,7 @@ I8TGUI {
 	var <tracksView;
 	var <trackActionsView;
 
+	var <synths;
 	var <synthdefs;
 	var <synthdefsView;
 	var <synthdefActionsView;
@@ -115,6 +116,24 @@ I8TGUI {
 
 		{
 			synthdefsView.items = list;
+			synthdefsView.action = callback;
+		}.defer;
+
+		^synthdefs;
+
+	}
+
+
+	synths_ {|list, callback|
+
+		synthdefs = list;
+
+		{
+			var newlist = list.collect({|v,k|
+				v
+			});
+			newlist.postln;
+			synthdefsView.items = newlist;
 			synthdefsView.action = callback;
 		}.defer;
 

@@ -64,7 +64,7 @@ I8TMain
 		autoMIDI = false;
 		nextMIDIController = -1;
 
-		// this.setupGUI();
+		this.setupGUI();
 
 		// dictionary for placing custom data:
 		data = ();
@@ -445,7 +445,7 @@ I8TMain
 
 
 		if( gui.notNil ) {
-			gui.synthdefs_(newList.asArray, {
+			gui.synths_(newList.asArray, {
 				arg ...args;
 				"synths gui callback:".postln;
 				args.postln;
@@ -551,9 +551,10 @@ I8TMain
 
 	synths {
 		^synths
+
 	}
 
-	loadPath {|path, parent, grandparent, greatgrandparent|
+	loadSynths {|path, parent, grandparent, greatgrandparent|
 
 		/*
 
@@ -658,7 +659,8 @@ I8TMain
 			folderName.postln;
 			"-------".postln;
 
-			items[folderName]=this.loadPath( folderSrc++"*", folder, parent, grandparent );
+			items[folderName]=
+			this.loadSynths( folderSrc++"*", folder, parent, grandparent );
 
 		});
 
